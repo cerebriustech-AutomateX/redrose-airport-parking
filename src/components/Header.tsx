@@ -37,9 +37,9 @@ export default function Header() {
           <Image
             src="/images/redrose-logo.png"
             alt="RedRose Airport Parking"
-            width={220}
-            height={280}
-            className="h-20 w-auto sm:h-24 lg:h-28"
+            width={1024}
+            height={682}
+            className="h-16 w-auto max-w-[min(280px,72vw)] bg-transparent sm:h-20 lg:h-24"
             priority
           />
         </Link>

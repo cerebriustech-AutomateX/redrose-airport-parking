@@ -41,37 +41,40 @@ export default function CinematicStage({ children }: { children: ReactNode }) {
     return () => media.removeEventListener("change", update);
   }, []);
 
-  const showScrollBackdrop = !isMobile && !reduceMotion;
+  const showScrollBackdrop = !reduceMotion;
 
   return (
     <div ref={stageRef} className="relative">
       {showScrollBackdrop && (
         <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-          <div className="cinematic-backdrop-zoom absolute inset-0">
+          <div
+            className={`cinematic-backdrop-zoom absolute inset-0 ${isMobile ? "cinematic-backdrop-zoom--mobile" : ""}`}
+          >
             <HeroSequenceCanvas progressRef={progressRef} />
           </div>
-          {/* Right zone stays clear — soft vignette only on far edges */}
-          <div className="cinematic-edge-vignette absolute inset-0" aria-hidden="true" />
-          {/* Left readability only — fades as you scroll */}
+          <div
+            className={`cinematic-edge-vignette absolute inset-0 ${isMobile ? "cinematic-edge-vignette--mobile" : ""}`}
+            aria-hidden="true"
+          />
           <motion.div
             style={{ opacity: introVeilOpacity }}
-            className="cinematic-left-readability absolute inset-0"
+            className={`cinematic-left-readability absolute inset-0 ${isMobile ? "cinematic-left-readability--mobile" : ""}`}
             aria-hidden="true"
           />
         </div>
       )}
 
-      {isMobile && !reduceMotion && (
-        <div className="pointer-events-none fixed inset-0 z-0">
+      {reduceMotion && (
+        <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#1A1A1D]">
           <Image
             src={HERO_STATIC_FRAME}
             alt=""
             fill
             priority
             sizes="100vw"
-            className="cinematic-mobile-bg object-cover object-center"
+            className="cinematic-mobile-bg object-contain object-[68%_46%]"
           />
-          <div className="cinematic-left-readability absolute inset-0" aria-hidden="true" />
+          <div className="cinematic-left-readability cinematic-left-readability--mobile absolute inset-0" aria-hidden="true" />
         </div>
       )}
 

@@ -76,6 +76,7 @@ function WhyChooseUsScroll({ sectionRef, activeCard, setActiveCard }: ScrollProp
       id="why-choose-us"
       sectionRef={sectionRef}
       heightVh={220}
+      mobileHeightVh={145}
       ariaLabelledBy="why-choose-us-heading"
     >
       <StoryLeftLayout>

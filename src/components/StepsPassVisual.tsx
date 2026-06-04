@@ -42,9 +42,9 @@ export default function StepsPassVisual({
         <Image
           src="/images/redrose-logo.png"
           alt=""
-          width={88}
-          height={112}
-          className="h-14 w-auto shrink-0 opacity-95"
+          width={1024}
+          height={682}
+          className="h-10 w-auto shrink-0 bg-transparent opacity-95 sm:h-11"
         />
         <div>
           <p className="font-[family-name:var(--font-montserrat)] text-[9px] font-semibold uppercase tracking-[0.22em] text-[rgba(242,242,242,0.45)]">

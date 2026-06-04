@@ -23,7 +23,7 @@ export default function Services() {
       className="relative overflow-x-hidden"
     >
       <div className="services-section-stage">
-        <div className="relative mx-auto w-full max-w-7xl px-6 lg:px-8">
+        <div className="relative mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8">
           <StoryLeftLayout>
             <div className="story-section-stack">
               <StorySectionHeader

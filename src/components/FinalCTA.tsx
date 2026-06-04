@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { AnimatedWords } from "@/components/AnimatedText";
 import StoryLeftLayout from "@/components/StoryLeftLayout";
 import StorySectionHeader from "@/components/StorySectionHeader";
 import { fadeUp, viewOnce } from "@/lib/motion";
@@ -20,8 +21,8 @@ export default function FinalCTA() {
   };
 
   return (
-    <section id="book" className="relative overflow-x-hidden py-24 sm:py-32">
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+    <section id="book" className="relative overflow-x-hidden py-20 sm:py-28 lg:py-32">
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <StoryLeftLayout>
           <motion.div
             initial="hidden"
@@ -48,7 +49,7 @@ export default function FinalCTA() {
                   className="btn-primary min-w-[220px]"
                   whileTap={reduceMotion ? undefined : { scale: 0.98 }}
                 >
-                  Check Availability
+                  <AnimatedWords text="Check Availability" mode="inView" />
                 </motion.button>
 
                 <AnimatePresence>
@@ -61,7 +62,7 @@ export default function FinalCTA() {
                       className="mt-5 text-sm text-[#F2F2F2]/90"
                       role="status"
                     >
-                      {notice}
+                      <AnimatedWords text={notice} mode="mount" />
                     </motion.p>
                   )}
                 </AnimatePresence>

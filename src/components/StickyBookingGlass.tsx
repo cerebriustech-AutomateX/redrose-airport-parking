@@ -34,9 +34,9 @@ export default function StickyBookingGlass({
           <Image
             src="/images/redrose-logo.png"
             alt=""
-            width={120}
-            height={152}
-            className="h-20 w-auto opacity-95"
+            width={1024}
+            height={682}
+            className="h-12 w-auto bg-transparent opacity-95"
           />
 
           <LayoutGroup>

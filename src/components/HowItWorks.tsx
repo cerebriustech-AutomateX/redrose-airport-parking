@@ -67,6 +67,7 @@ function HowItWorksScroll({ sectionRef }: ScrollProps) {
       id="how-it-works"
       sectionRef={sectionRef}
       heightVh={200}
+      mobileHeightVh={130}
       ariaLabelledBy="how-it-works-heading"
     >
       <StoryLeftLayout>

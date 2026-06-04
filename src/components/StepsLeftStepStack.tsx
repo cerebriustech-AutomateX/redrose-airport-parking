@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { AnimatedWords } from "@/components/AnimatedText";
 import { stepsEase } from "@/lib/stepsMotion";
 
 export type StepStackItem = {
@@ -51,11 +52,11 @@ export default function StepsLeftStepStack({
             </div>
 
             <h3 className="mt-4 text-[1.5rem] font-bold leading-tight tracking-tight text-white/95 sm:text-[1.625rem] font-(family-name:--font-montserrat)">
-              {item.title}
+              <AnimatedWords text={item.title} mode="mount" />
             </h3>
 
             <p className="mt-4 text-[1rem] leading-relaxed text-white/55 sm:text-[1.0625rem]">
-              {item.description}
+              <AnimatedWords text={item.description} mode="mount" delay={0.1} />
             </p>
           </motion.article>
         ))}

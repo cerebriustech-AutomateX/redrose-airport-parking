@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatedWords } from "@/components/AnimatedText";
 import { parkingAirports } from "@/lib/data";
 
 type BookingCardProps = {
@@ -126,7 +127,9 @@ type FrostFieldProps = {
 function FrostField({ label, name, children }: FrostFieldProps) {
   return (
     <label htmlFor={name} className="frost-row block cursor-text">
-      <span className="frost-row-label">{label}</span>
+      <span className="frost-row-label">
+        <AnimatedWords text={label} mode="inView" />
+      </span>
       {children}
     </label>
   );

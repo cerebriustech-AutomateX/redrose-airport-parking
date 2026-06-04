@@ -52,6 +52,74 @@ export const heroCard = {
   },
 };
 
+/** Hero headline + lead — one word at a time */
+export const heroWord = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.48, ease: easeOutExpo },
+  },
+};
+
+export const heroAccentReveal = {
+  hidden: { opacity: 0, scaleX: 0 },
+  visible: {
+    opacity: 1,
+    scaleX: 1,
+    transition: { duration: 0.42, ease: easeOutExpo },
+  },
+};
+
+export const heroWordStagger = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.09,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+/** Site-wide copy — lighter, quicker word reveal */
+export const softWord = {
+  hidden: { opacity: 0, y: 6 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.36, ease: easeOutExpo },
+  },
+};
+
+export const softWordStagger = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.045,
+      delayChildren: 0.08,
+    },
+  },
+};
+
+export const softLine = {
+  hidden: { opacity: 0, y: 8 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.42, ease: easeOutExpo },
+  },
+};
+
+export const softLineStagger = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.07,
+      delayChildren: 0.06,
+    },
+  },
+};
+
 export const fadeIn = {
   hidden: { opacity: 0 },
   visible: {

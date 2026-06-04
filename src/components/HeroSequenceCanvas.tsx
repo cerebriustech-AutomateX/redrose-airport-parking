@@ -4,6 +4,7 @@ import { MutableRefObject, useCallback, useEffect, useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 import {
   HERO_FRAME_COUNT,
+  HERO_MOBILE_BACKDROP,
   HERO_SEQUENCE,
   getHeroFramePath,
   progressToFrameIndex,
@@ -17,6 +18,34 @@ const FOCUS_X = 0.5;
 const FOCUS_Y = 0.54;
 /** Nudge the frame down so top-edge UI is not clipped by the header. */
 const HEADER_SAFE_RATIO = 0.048;
+
+function drawContain(
+  ctx: CanvasRenderingContext2D,
+  image: HTMLImageElement,
+  width: number,
+  height: number,
+  focusX: number,
+  focusY: number,
+  headerSafeRatio: number,
+) {
+  const iw = image.naturalWidth;
+  const ih = image.naturalHeight;
+  if (iw <= 0 || ih <= 0) return;
+
+  const scale = Math.min(width / iw, height / ih);
+  const drawWidth = iw * scale;
+  const drawHeight = ih * scale;
+  const offsetX = (width - drawWidth) * focusX;
+  const offsetY = (height - drawHeight) * focusY + height * headerSafeRatio;
+
+  ctx.drawImage(
+    image,
+    Math.round(offsetX),
+    Math.round(offsetY),
+    Math.round(drawWidth),
+    Math.round(drawHeight),
+  );
+}
 
 function drawCover(
   ctx: CanvasRenderingContext2D,
@@ -166,7 +195,20 @@ export default function HeroSequenceCanvas({
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
 
-      drawCover(ctx, image, width, height);
+      const useMobileFit = width <= HERO_MOBILE_BACKDROP.maxWidth;
+      if (useMobileFit) {
+        drawContain(
+          ctx,
+          image,
+          width,
+          height,
+          HERO_MOBILE_BACKDROP.focusX,
+          HERO_MOBILE_BACKDROP.focusY,
+          HERO_MOBILE_BACKDROP.headerSafeRatio,
+        );
+      } else {
+        drawCover(ctx, image, width, height);
+      }
       displayedIndexRef.current = index;
     },
     [applyCanvasSize],

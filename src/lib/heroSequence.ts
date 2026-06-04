@@ -41,6 +41,14 @@ export function progressToFrameIndex(progress: number): number {
 export const HERO_STATIC_FRAME = getHeroFramePath(0);
 export const HERO_FINAL_FRAME = getHeroFramePath(HERO_FRAME_COUNT - 1);
 
+/** Mobile / narrow viewports — shrink frame (contain) and bias focus to the car on the right */
+export const HERO_MOBILE_BACKDROP = {
+  maxWidth: 767,
+  focusX: 0.68,
+  focusY: 0.46,
+  headerSafeRatio: 0.028,
+} as const;
+
 /** Scroll distance while canvas is pinned — longer = more room for the full story */
 export const SCROLL_SECTION_HEIGHT_VH = 420;
 

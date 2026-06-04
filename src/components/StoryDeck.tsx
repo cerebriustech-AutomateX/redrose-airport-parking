@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
+import { AnimatedWords } from "@/components/AnimatedText";
 import { storyDeckCard } from "@/lib/motion";
 
 export type StoryDeckItem = {
@@ -119,10 +120,14 @@ export default function StoryDeck({
                 {active.number}
               </span>
               <h3 className="mt-3 font-(family-name:--font-montserrat) text-lg font-semibold uppercase tracking-wide text-[#F2F2F2]">
-                {active.title}
+                <AnimatedWords text={active.title} mode="mount" />
               </h3>
               <p className="text-body-muted text-pretty mt-3 text-sm leading-relaxed">
-                {active.description}
+                <AnimatedWords
+                  text={active.description}
+                  mode="mount"
+                  delay={0.08}
+                />
               </p>
             </motion.article>
           </AnimatePresence>

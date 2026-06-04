@@ -1,22 +1,101 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import BookingCard from "@/components/BookingCard";
-import { HERO_STATIC_FRAME } from "@/lib/heroSequence";
+import { heroAccentReveal, heroWord } from "@/lib/motion";
 
-function HeroIntroCopy() {
+const HERO_TITLE_LINE = "Airport Parking";
+const HERO_TITLE_MUTED = "made simple.";
+const HERO_LEAD =
+  "Secure parking for Manchester Airport. Book in minutes and arrive with confidence.";
+
+const HERO_STAGGER = 0.09;
+const HERO_START_DELAY = 0.2;
+
+function HeroIntroCopyStatic() {
   return (
     <div className="hero-intro-copy">
       <span className="hero-intro-accent" aria-hidden="true" />
       <h1 className="hero-intro-title">
-        <span className="hero-intro-title-line">Airport Parking</span>
-        <span className="hero-intro-title-muted">made simple.</span>
+        <span className="hero-intro-title-line">{HERO_TITLE_LINE}</span>
+        <span className="hero-intro-title-muted">{HERO_TITLE_MUTED}</span>
+      </h1>
+      <p className="hero-intro-lead text-pretty">{HERO_LEAD}</p>
+    </div>
+  );
+}
+
+function HeroIntroWords({
+  text,
+  step,
+}: {
+  text: string;
+  step: { current: number };
+}) {
+  const tokens = text.trim().split(/\s+/);
+
+  return (
+    <>
+      {tokens.map((token, index) => {
+        const delay = HERO_START_DELAY + step.current * HERO_STAGGER;
+        step.current += 1;
+
+        return (
+          <Fragment key={`${token}-${index}`}>
+            <motion.span
+              className="hero-intro-word"
+              initial={heroWord.hidden}
+              animate={heroWord.visible}
+              transition={{
+                ...heroWord.visible.transition,
+                delay,
+              }}
+            >
+              {token}
+            </motion.span>
+            {index < tokens.length - 1 ? " " : null}
+          </Fragment>
+        );
+      })}
+    </>
+  );
+}
+
+function HeroIntroCopy() {
+  const reduceMotion = useReducedMotion();
+  const step = { current: 0 };
+
+  if (reduceMotion) {
+    return <HeroIntroCopyStatic />;
+  }
+
+  const accentDelay = HERO_START_DELAY + step.current * HERO_STAGGER;
+  step.current += 1;
+
+  return (
+    <div className="hero-intro-copy">
+      <motion.span
+        className="hero-intro-accent origin-left"
+        aria-hidden="true"
+        initial={heroAccentReveal.hidden}
+        animate={heroAccentReveal.visible}
+        transition={{
+          ...heroAccentReveal.visible.transition,
+          delay: accentDelay,
+        }}
+      />
+      <h1 className="hero-intro-title">
+        <span className="hero-intro-title-line">
+          <HeroIntroWords text={HERO_TITLE_LINE} step={step} />
+        </span>
+        <span className="hero-intro-title-muted">
+          <HeroIntroWords text={HERO_TITLE_MUTED} step={step} />
+        </span>
       </h1>
       <p className="hero-intro-lead text-pretty">
-        Secure parking for Manchester Airport. Book in minutes and arrive with
-        confidence.
+        <HeroIntroWords text={HERO_LEAD} step={step} />
       </p>
     </div>
   );
@@ -59,20 +138,13 @@ export default function JourneySection() {
 
 function MobileHero() {
   return (
-    <section id="home" className="relative overflow-x-hidden pt-24 pb-16">
-      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <Image
-          src={HERO_STATIC_FRAME}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1A1A1D]/75 via-[#1A1A1D]/55 to-[#1A1A1D]/90" />
-      </div>
+    <section id="home" className="relative overflow-x-hidden pt-20 pb-14 sm:pt-24 sm:pb-16">
+      <div
+        className="pointer-events-none absolute inset-0 hero-mobile-scrim"
+        aria-hidden="true"
+      />
 
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <HeroIntroCopy />
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Link href="#hero-book" className="btn-primary">

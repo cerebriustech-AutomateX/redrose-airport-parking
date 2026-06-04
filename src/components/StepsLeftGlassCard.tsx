@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { AnimatedWords } from "@/components/AnimatedText";
 import type { StoryDeckItem } from "@/components/StoryDeck";
 import {
   respecLeftGlassCard,
@@ -45,21 +46,29 @@ export default function StepsLeftGlassCard({
         className="px-6 py-5 sm:px-7 sm:py-6"
       >
         <motion.p className="steps-section-eyebrow" variants={respecLeftGlassItem}>
-          You&apos;re all set
+          <AnimatedWords text="You're all set" mode="mount" />
         </motion.p>
 
         <motion.h3
           className="mt-3 font-(family-name:--font-montserrat) text-xl font-bold tracking-tight text-[#F2F2F2] sm:text-[1.35rem]"
           variants={respecLeftGlassItem}
         >
-          Your parking pass is ready
+          <AnimatedWords
+            text="Your parking pass is ready"
+            mode="mount"
+            delay={0.06}
+          />
         </motion.h3>
 
         <motion.p
           className="steps-section-subcopy text-pretty mt-3 text-sm leading-relaxed"
           variants={respecLeftGlassItem}
         >
-          Booking confirmed, bay assigned, and directions sent before you travel.
+          <AnimatedWords
+            text="Booking confirmed, bay assigned, and directions sent before you travel."
+            mode="mount"
+            delay={0.12}
+          />
         </motion.p>
 
         <motion.ul className="mt-5 space-y-2" variants={respecLeftGlassItem}>
@@ -81,16 +90,24 @@ export default function StepsLeftGlassCard({
           variants={respecLeftGlassItem}
         >
           <p className="font-(family-name:--font-montserrat) text-[9px] font-semibold uppercase tracking-[0.2em] text-white/40">
-            Pass status
+            <AnimatedWords text="Pass status" mode="mount" />
           </p>
           <div className="mt-3 space-y-2">
-            {passRows.map((row) => (
+            {passRows.map((row, index) => (
               <div
                 key={row.label}
                 className="flex items-center justify-between gap-3 text-sm"
               >
-                <span className="text-white/45">{row.label}</span>
-                <span className="font-medium text-[#F2F2F2]">{row.detail}</span>
+                <span className="text-white/45">
+                  <AnimatedWords text={row.label} mode="mount" delay={index * 0.04} />
+                </span>
+                <span className="font-medium text-[#F2F2F2]">
+                  <AnimatedWords
+                    text={row.detail}
+                    mode="mount"
+                    delay={0.05 + index * 0.04}
+                  />
+                </span>
               </div>
             ))}
           </div>

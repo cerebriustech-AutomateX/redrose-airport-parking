@@ -369,6 +369,37 @@ button[data-next-mark],
   filter: contrast(1.05) saturate(1.06) brightness(1.02);
 }
 
+/* Mobile — shrink backdrop (contain) so the car stays in frame; lighter edge vignette */
+.cinematic-backdrop-zoom--mobile {
+  transform: none;
+}
+
+.cinematic-edge-vignette--mobile {
+  background:
+    linear-gradient(to right, rgba(26, 26, 29, 0.42) 0%, transparent 12%),
+    linear-gradient(to bottom, rgba(26, 26, 29, 0.38) 0%, transparent 18%),
+    linear-gradient(to top, rgba(26, 26, 29, 0.28) 0%, transparent 12%);
+}
+
+.cinematic-left-readability--mobile {
+  background: linear-gradient(
+    180deg,
+    rgba(26, 26, 29, 0.5) 0%,
+    rgba(26, 26, 29, 0.22) 32%,
+    transparent 58%
+  );
+}
+
+.hero-mobile-scrim {
+  background: linear-gradient(
+    180deg,
+    rgba(26, 26, 29, 0.42) 0%,
+    rgba(26, 26, 29, 0.12) 34%,
+    rgba(26, 26, 29, 0.38) 58%,
+    rgba(26, 26, 29, 0.92) 100%
+  );
+}
+
 .story-panel-glass {
   position: relative;
   overflow: hidden;
@@ -836,6 +867,51 @@ button[data-next-mark],
     padding: 1.375rem 1.375rem 1.5rem;
     border-radius: 1.375rem;
   }
+
+  .story-left-rail,
+  .story-section-stack {
+    max-width: 100%;
+  }
+
+  .story-section-stack {
+    gap: 1rem;
+    padding-top: 0.5rem;
+  }
+
+  .story-left-column::before {
+    background: linear-gradient(
+      180deg,
+      rgba(26, 26, 29, 0.62) 0%,
+      rgba(26, 26, 29, 0.28) 42%,
+      transparent 72%
+    );
+  }
+
+  .hero-readability-gradient {
+    background: linear-gradient(
+      180deg,
+      rgba(26, 26, 29, 0.55) 0%,
+      rgba(26, 26, 29, 0.2) 40%,
+      transparent 65%
+    );
+  }
+
+  .hero-intro-title {
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+  }
+
+  .hero-intro-lead {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  #why-choose-us .story-scene-stage {
+    padding-top: clamp(5.5rem, 14vh, 7rem);
+  }
+
+  .intro-booking-card .frost-panel-inner {
+    padding: 1.125rem 1rem;
+  }
 }
 
 .steps-deck-card--front {
@@ -1150,6 +1226,12 @@ button[data-next-mark],
   line-height: 1.06;
   letter-spacing: -0.025em;
   color: #f2f2f2;
+}
+
+.hero-intro-word,
+.text-reveal-word {
+  display: inline-block;
+  vertical-align: top;
 }
 
 .hero-intro-title-line {
