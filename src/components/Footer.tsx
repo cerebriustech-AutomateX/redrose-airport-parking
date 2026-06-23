@@ -4,11 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { AnimatedWords } from "@/components/AnimatedText";
-import { footerLegalLinks, footerQuickLinks } from "@/lib/data";
+import { companyInfo, footerInfoLinks, footerQuickLinks } from "@/lib/data";
 import { softLineStagger, viewOnce } from "@/lib/motion";
 
 const FOOTER_TAGLINE =
-  "Premium, secure and convenient airport parking designed to make your journey easier.";
+  "Park & Ride and Meet & Greet parking at Manchester Airport — secure compounds, clear instructions, and operations support when you need it.";
 
 export default function Footer() {
   const reduceMotion = useReducedMotion();
@@ -22,9 +22,9 @@ export default function Footer() {
             alt="RedRose Airport Parking"
             width={1024}
             height={682}
-            className="h-16 w-auto max-w-full bg-transparent sm:h-20 lg:h-24"
+            className="h-16 w-auto max-w-full bg-transparent sm:h-20"
           />
-          <p className="mt-6 max-w-sm leading-relaxed text-redrose-grey">
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-redrose-grey">
             <AnimatedWords text={FOOTER_TAGLINE} />
           </p>
         </div>
@@ -33,7 +33,7 @@ export default function Footer() {
           <h3 className="font-[family-name:var(--font-montserrat)] text-sm font-semibold uppercase tracking-wider text-white">
             <AnimatedWords text="Quick Links" />
           </h3>
-          <ul className="mt-5 space-y-3">
+          <ul className="mt-4 space-y-2.5">
             {footerQuickLinks.map((link, index) => (
               <li key={link.href}>
                 <Link
@@ -51,41 +51,46 @@ export default function Footer() {
           <h3 className="font-[family-name:var(--font-montserrat)] text-sm font-semibold uppercase tracking-wider text-white">
             <AnimatedWords text="Contact" />
           </h3>
-          <ul className="mt-5 space-y-3 text-sm text-redrose-grey">
+          <ul className="mt-4 space-y-2.5 text-sm text-redrose-grey">
             <li>
-              <AnimatedWords text="Email: info@redroseparking.co.uk" />
+              <a
+                href={`mailto:${companyInfo.email}`}
+                className="transition-colors hover:text-white"
+              >
+                {companyInfo.email}
+              </a>
             </li>
             <li>
-              <AnimatedWords text="Phone: 00000 000000" delay={0.05} />
+              <a
+                href={`tel:${companyInfo.operationsPhone}`}
+                className="transition-colors hover:text-white"
+              >
+                {companyInfo.operationsPhoneDisplay}
+              </a>
             </li>
-            <li>
-              <AnimatedWords
-                text="Location details coming soon"
-                delay={0.1}
-              />
-            </li>
+            <li>{companyInfo.facilityPostcode}</li>
+          </ul>
+          <ul className="mt-5 space-y-2.5">
+            {footerInfoLinks.map((link, index) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="text-sm text-redrose-grey transition-colors hover:text-white"
+                >
+                  <AnimatedWords text={link.label} delay={index * 0.03} />
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
 
-      <div className="mt-12 flex flex-col gap-4 border-t border-white/5 pt-8 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-10 border-t border-white/5 pt-6">
         <p className="text-xs text-redrose-grey">
           <AnimatedWords
             text={`© ${new Date().getFullYear()} RedRose Airport Parking. All rights reserved.`}
           />
         </p>
-        <ul className="flex flex-wrap gap-6">
-          {footerLegalLinks.map((link, index) => (
-            <li key={link.label}>
-              <Link
-                href={link.href}
-                className="text-xs text-redrose-grey transition-colors hover:text-white"
-              >
-                <AnimatedWords text={link.label} delay={index * 0.04} />
-              </Link>
-            </li>
-          ))}
-        </ul>
       </div>
     </>
   );

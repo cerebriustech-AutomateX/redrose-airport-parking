@@ -19,7 +19,7 @@ export const STORY_CHAPTERS = {
     beat: "Choose your experience",
     eyebrow: "Services",
     storyLine:
-      "Pick the parking option that fits your trip — simple, premium, or meet and greet.",
+      "Park & Ride or Meet & Greet at Manchester Airport — with clear procedures and support when you travel.",
   },
   cta: {
     chapter: "04",

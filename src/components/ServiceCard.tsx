@@ -12,14 +12,23 @@ export type ServiceCardItem = {
 type ServiceCardProps = {
   item: ServiceCardItem;
   index?: number;
+  variant?: "default" | "extra";
 };
 
-export default function ServiceCard({ item, index = 0 }: ServiceCardProps) {
+export default function ServiceCard({
+  item,
+  index = 0,
+  variant = "default",
+}: ServiceCardProps) {
   const reduceMotion = useReducedMotion();
+  const cardClass =
+    variant === "extra" ? "services-card services-card-extra" : "services-card";
 
   const card = (
-    <article className="services-card">
-      <span className="services-card-number">{item.number}</span>
+    <article className={cardClass}>
+      {variant === "default" ? (
+        <span className="services-card-number">{item.number}</span>
+      ) : null}
       <h3 className="services-card-title">
         <AnimatedWords text={item.title} delay={index * 0.04} />
       </h3>

@@ -9,7 +9,7 @@ import { heroAccentReveal, heroWord } from "@/lib/motion";
 const HERO_TITLE_LINE = "Airport Parking";
 const HERO_TITLE_MUTED = "made simple.";
 const HERO_LEAD =
-  "Secure parking for Manchester Airport. Book in minutes and arrive with confidence.";
+  "Park & Ride and Meet & Greet at Manchester Airport. Book online, arrive at SK9 4JL, and travel with confidence.";
 
 const HERO_STAGGER = 0.09;
 const HERO_START_DELAY = 0.2;
@@ -125,9 +125,9 @@ export default function JourneySection() {
       <div className="hero-readability-gradient pointer-events-none absolute inset-0" aria-hidden="true" />
 
       <div className="relative mx-auto w-full max-w-7xl px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,400px)] lg:gap-14 xl:gap-16">
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,480px)] lg:gap-14 xl:grid-cols-[minmax(0,1fr)_minmax(0,520px)] xl:gap-16">
           <HeroIntroCopy />
-          <div className="w-full lg:justify-self-end">
+          <div className="hero-booking-column w-full lg:justify-self-end">
             <BookingCard id="hero-book" variant="intro" />
           </div>
         </div>
@@ -154,7 +154,7 @@ function MobileHero() {
             How It Works
           </Link>
         </div>
-        <div className="mt-10">
+        <div className="mt-10 hero-booking-column">
           <BookingCard id="hero-book" variant="intro" />
         </div>
       </div>

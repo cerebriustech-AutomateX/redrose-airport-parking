@@ -22,21 +22,23 @@ const raleway = Raleway({
 });
 
 export const metadata: Metadata = {
-  title: "RedRose Airport Parking | Premium Secure Airport Parking",
+  title: "RedRose Airport Parking | Manchester Airport Park & Ride & Meet & Greet",
   description:
-    "Book reliable airport parking with clear communication, convenient access and a smoother start to your journey. Premium, secure and convenient.",
+    "Book Park & Ride or Meet & Greet parking at Manchester Airport. Secure compounds, clear instructions, and operations support on 07707 787612.",
   keywords: [
-    "airport parking",
-    "RedRose Airport Parking",
-    "secure parking",
-    "book airport parking",
+    "Manchester Airport parking",
+    "Red Rose Airport Parking",
+    "Park and Ride Manchester",
+    "Meet and Greet Manchester Airport",
+    "SK9 4JL airport parking",
   ],
   openGraph: {
     title: "RedRose Airport Parking",
     description:
-      "Airport parking that feels simple, secure and stress-free.",
+      "Park & Ride and Meet & Greet at Manchester Airport — secure parking with clear procedures and support.",
     type: "website",
     locale: "en_GB",
+    url: "https://redroseparking.com",
   },
 };
 

@@ -7,8 +7,8 @@ import StoryRouteAccent from "@/components/StoryRouteAccent";
 import { softLine, softLineStagger, viewOnce } from "@/lib/motion";
 
 type StorySectionHeaderProps = {
-  chapter: string;
-  beat: string;
+  chapter?: string;
+  beat?: string;
   eyebrow: string;
   heading: ReactNode;
   storyLine: string;
@@ -27,17 +27,24 @@ export default function StorySectionHeader({
   className = "",
 }: StorySectionHeaderProps) {
   const reduceMotion = useReducedMotion();
+  const chapterLabel =
+    chapter && beat ? (
+      <p className="story-chapter-label">
+        <span className="story-chapter-num">Chapter {chapter}</span>
+        <span className="story-chapter-sep" aria-hidden="true">
+          ·
+        </span>
+        <span className="story-chapter-beat">{beat}</span>
+      </p>
+    ) : null;
+
   if (reduceMotion) {
     return (
       <header className={className}>
-        <p className="story-chapter-label">
-          <span className="story-chapter-num">Chapter {chapter}</span>
-          <span className="story-chapter-sep" aria-hidden="true">
-            ·
-          </span>
-          <span className="story-chapter-beat">{beat}</span>
+        {chapterLabel}
+        <p className={`steps-section-eyebrow ${chapterLabel ? "mt-3" : ""}`}>
+          {eyebrow}
         </p>
-        <p className="steps-section-eyebrow mt-3">{eyebrow}</p>
         <h2 id={headingId} className="steps-section-heading mt-4">
           {heading}
         </h2>
@@ -57,17 +64,13 @@ export default function StorySectionHeader({
       viewport={viewOnce}
       variants={softLineStagger}
     >
-      <motion.p className="story-chapter-label" variants={softLine}>
-        <span className="story-chapter-num">Chapter {chapter}</span>
-        <span className="story-chapter-sep" aria-hidden="true">
-          ·
-        </span>
-        <span className="story-chapter-beat">{beat}</span>
-      </motion.p>
+      {chapterLabel ? (
+        <motion.div variants={softLine}>{chapterLabel}</motion.div>
+      ) : null}
 
       <AnimatedWords
         text={eyebrow}
-        className="steps-section-eyebrow mt-3 block"
+        className={`steps-section-eyebrow block ${chapterLabel ? "mt-3" : ""}`}
       />
 
       <motion.h2

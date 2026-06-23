@@ -1,9 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import ServiceCard from "@/components/ServiceCard";
 import StoryLeftLayout from "@/components/StoryLeftLayout";
 import StorySectionHeader from "@/components/StorySectionHeader";
-import { serviceCards } from "@/lib/data";
+import { serviceCards, travelExtraCards } from "@/lib/data";
 import { STORY_CHAPTERS } from "@/lib/storySpine";
 
 const chapter = STORY_CHAPTERS.services;
@@ -13,6 +14,12 @@ const cards = serviceCards.map((service, index) => ({
   number: String(index + 1).padStart(2, "0"),
   title: service.title,
   description: service.description,
+}));
+
+const extraCards = travelExtraCards.map((extra, index) => ({
+  number: String(index + 1).padStart(2, "0"),
+  title: extra.title,
+  description: extra.description,
 }));
 
 export default function Services() {
@@ -39,6 +46,26 @@ export default function Services() {
                 {cards.map((item, index) => (
                   <ServiceCard key={item.number} item={item} index={index} />
                 ))}
+              </div>
+
+              <div id="travel-extras" className="travel-extras-block">
+                <p className="travel-extras-eyebrow">Travel Extras</p>
+                <p className="travel-extras-copy">
+                  Compare airport hotel stays through our trusted partner.
+                </p>
+                <div className="travel-extras-card-stack">
+                  {extraCards.map((item, index) => (
+                    <ServiceCard
+                      key={item.number}
+                      item={item}
+                      index={index}
+                      variant="extra"
+                    />
+                  ))}
+                </div>
+                <Link href="/#book" className="travel-extras-link">
+                  Search hotels in the booking panel
+                </Link>
               </div>
             </div>
           </StoryLeftLayout>

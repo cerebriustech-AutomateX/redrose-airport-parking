@@ -33,7 +33,7 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 sm:py-5 lg:px-8">
-        <Link href="#home" className="relative z-10 shrink-0">
+        <Link href="/" className="relative z-10 shrink-0">
           <Image
             src="/images/redrose-logo.png"
             alt="RedRose Airport Parking"
@@ -58,7 +58,7 @@ export default function Header() {
 
         <div className="flex items-center gap-3">
           <Link
-            href="#book"
+            href="/#book"
             className="btn-primary hidden px-5 py-2.5 sm:inline-flex"
           >
             Book Parking
@@ -111,7 +111,7 @@ export default function Header() {
                 </Link>
               ))}
               <Link
-                href="#book"
+                href="/#book"
                 onClick={() => setMenuOpen(false)}
                 className="btn-primary mt-4 px-8 py-3"
               >
