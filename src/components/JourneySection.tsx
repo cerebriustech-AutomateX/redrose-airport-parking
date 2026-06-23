@@ -125,7 +125,7 @@ export default function JourneySection() {
       <div className="hero-readability-gradient pointer-events-none absolute inset-0" aria-hidden="true" />
 
       <div className="relative mx-auto w-full max-w-7xl px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,480px)] lg:gap-14 xl:grid-cols-[minmax(0,1fr)_minmax(0,520px)] xl:gap-16">
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,540px)] lg:gap-14 xl:grid-cols-[minmax(0,1fr)_minmax(0,600px)] xl:gap-16">
           <HeroIntroCopy />
           <div className="hero-booking-column w-full lg:justify-self-end">
             <BookingCard id="hero-book" variant="intro" />

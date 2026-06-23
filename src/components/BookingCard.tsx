@@ -7,7 +7,7 @@ import { companyInfo, parkingServices } from "@/lib/data";
 import {
   HOTEL_SEARCH_HELPER,
   buildHotelSearchUrl,
-  hotelDestinations,
+  resolvePlaceId,
 } from "@/lib/hotels";
 
 type BookingTab = "parking" | "hotels";
@@ -32,6 +32,8 @@ export default function BookingCard({
 }: BookingCardProps) {
   const [activeTab, setActiveTab] = useState<BookingTab>("parking");
   const [notice, setNotice] = useState<string | null>(null);
+  const [hotelNotice, setHotelNotice] = useState<string | null>(null);
+  const [hotelLoading, setHotelLoading] = useState(false);
   const reduceMotion = useReducedMotion();
 
   const handleParkingSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -39,29 +41,51 @@ export default function BookingCard({
     setNotice("Booking system coming soon.");
   };
 
-  const handleHotelSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleHotelSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    const destinationValue = String(
-      form.get("destination") ?? "manchester-area",
-    );
-    const destination = hotelDestinations.find(
-      (item) => item.value === destinationValue,
-    );
-    const adults = Number(form.get("adults") ?? 2);
-    const children = Number(form.get("children") ?? 0);
-    const rooms = Number(form.get("rooms") ?? 1);
+    setHotelNotice(null);
+    setHotelLoading(true);
 
-    const url = buildHotelSearchUrl({
-      destination: destination?.label,
-      checkIn: String(form.get("checkin") ?? ""),
-      checkOut: String(form.get("checkout") ?? ""),
-      adults: Number.isFinite(adults) ? adults : 2,
-      children: Number.isFinite(children) ? children : 0,
-      rooms: Number.isFinite(rooms) ? rooms : 1,
-    });
+    try {
+      const form = new FormData(event.currentTarget);
+      const destination = String(form.get("destination") ?? "").trim();
+      const checkIn = String(form.get("checkin") ?? "");
+      const checkOut = String(form.get("checkout") ?? "");
+      const adults = Number(form.get("adults") ?? 2);
+      const children = Number(form.get("children") ?? 0);
+      const rooms = Number(form.get("rooms") ?? 1);
 
-    window.open(url, "_blank", "noopener,noreferrer");
+      if (!destination) {
+        setHotelNotice("Please enter a destination.");
+        return;
+      }
+
+      if (!checkIn || !checkOut) {
+        setHotelNotice("Please choose check-in and check-out dates.");
+        return;
+      }
+
+      const place = await resolvePlaceId(destination);
+      if (!place) {
+        setHotelNotice(
+          "We could not match that destination. Try Manchester, London, Spain, or another major city.",
+        );
+        return;
+      }
+
+      const url = buildHotelSearchUrl({
+        placeId: place.placeId,
+        checkIn,
+        checkOut,
+        adults: Number.isFinite(adults) ? adults : 2,
+        children: Number.isFinite(children) ? children : 0,
+        rooms: Number.isFinite(rooms) ? rooms : 1,
+      });
+
+      window.open(url, "_blank", "noopener,noreferrer");
+    } finally {
+      setHotelLoading(false);
+    }
   };
 
   const card = (
@@ -94,6 +118,7 @@ export default function BookingCard({
             onClick={() => {
               setActiveTab("hotels");
               setNotice(null);
+              setHotelNotice(null);
             }}
           >
             Hotels
@@ -217,41 +242,40 @@ export default function BookingCard({
                 className="space-y-3"
               >
                 <FrostField
-                  label="Destination"
+                  label="Where"
                   name="destination"
-                  hint="Select the area you want to stay in."
+                  hint="Enter any destination, e.g. Manchester, London, Spain."
                 >
-                  <select
+                  <input
                     id="destination"
+                    type="text"
                     name="destination"
-                    defaultValue="manchester-area"
+                    placeholder="Enter a destination"
                     className="frost-row-input"
-                  >
-                    {hotelDestinations.map((item) => (
-                      <option key={item.value} value={item.value}>
-                        {item.label}
-                      </option>
-                    ))}
-                  </select>
+                    required
+                    autoComplete="off"
+                  />
                 </FrostField>
 
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <FrostField label="Check-in" name="checkin">
-                    <input
-                      id="checkin"
-                      type="date"
-                      name="checkin"
-                      className="frost-row-input"
-                    />
-                  </FrostField>
-                  <FrostField label="Check-out" name="checkout">
-                    <input
-                      id="checkout"
-                      type="date"
-                      name="checkout"
-                      className="frost-row-input"
-                    />
-                  </FrostField>
+                <FrostField label="Check-in" name="checkin">
+                  <input
+                    id="checkin"
+                    type="date"
+                    name="checkin"
+                    className="frost-row-input"
+                    required
+                  />
+                </FrostField>
+                <FrostField label="Check-out" name="checkout">
+                  <input
+                    id="checkout"
+                    type="date"
+                    name="checkout"
+                    className="frost-row-input"
+                    required
+                  />
+                </FrostField>
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-3">
@@ -290,9 +314,31 @@ export default function BookingCard({
                   </FrostField>
                 </div>
 
-                <button type="submit" className="btn-submit frost-submit">
-                  Search Hotels
+                <button
+                  type="submit"
+                  className="btn-submit frost-submit"
+                  disabled={hotelLoading}
+                >
+                  {hotelLoading ? "Searching..." : "Search Hotels"}
                 </button>
+
+                <AnimatePresence>
+                  {hotelNotice && (
+                    <motion.p
+                      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -4 }}
+                      transition={{
+                        duration: 0.25,
+                        ease: [0.23, 1, 0.32, 1],
+                      }}
+                      className="rounded-xl border border-redrose-red/30 bg-redrose-red/10 px-4 py-3 text-center text-sm text-redrose-off-white backdrop-blur-md"
+                      role="status"
+                    >
+                      {hotelNotice}
+                    </motion.p>
+                  )}
+                </AnimatePresence>
               </form>
             )}
           </motion.div>
